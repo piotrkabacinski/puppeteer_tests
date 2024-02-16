@@ -1,4 +1,5 @@
 import { describe, it, after, beforeEach } from "node:test";
+import fs from "fs";
 import { strictEqual} from "node:assert";
 import puppeteer from "puppeteer";
 import path from "path";
@@ -8,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const browser = await puppeteer.launch({
-  headless: false
+  headless: true
 });
 
 let page;
@@ -16,6 +17,10 @@ let page;
 describe("Static page test", async () => {
   beforeEach(async () => {
     page = await browser.newPage();
+
+    const mockContent = fs.readFileSync(`${__dirname}/mock.js`, 'utf8');
+
+    await page.evaluateOnNewDocument(mockContent);
 
     await page.goto(`file:///${__dirname}/index.html`);
   });
@@ -37,7 +42,7 @@ describe("Static page test", async () => {
   it('Changes h1 colors after button click', async () => {
     const [h1] = await Promise.all([
       page.waitForSelector("h1"),
-      page.waitForSelector("button"),
+      page.waitForSelector("button#toggle"),
     ]);
 
     for await (const color of ["blue", "red", ""]) {

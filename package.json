@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "pptr-testing-library": "^0.7.0",
     "puppeteer": "^22.0.0"
   }
 }
