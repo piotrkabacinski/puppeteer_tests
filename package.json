@@ -5,12 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha"
+    "test": "playwright test"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "pptr-testing-library": "^0.7.0",
+    "@playwright/test": "^1.41.2",
+    "@types/node": "^20.11.19",
     "puppeteer": "^22.0.0"
   }
 }
